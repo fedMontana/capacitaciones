@@ -1,6 +1,6 @@
 'use strict';
 
-const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyeKYDVzYrQW6xT5DPle6_7cX-BLmaUGLcVrl91JtJD3qH8akb1yOJV_y73aJt29PB_MQ/exec';
+const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzbdS13cYPzm1rJ0vLFeY9jkKedAimW3Oq7dHJXW4lGwyLnzYC2Xts1SEFVKJvF7caH1A/exec';
 
 const etiquetas = {
   senderismo: 'Senderismo',
