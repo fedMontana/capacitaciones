@@ -703,3 +703,49 @@ footer a {
 .portrait:has(#foto-enlace:not([hidden])) {
   padding-bottom: 28px;
 }
+
+
+/* Más espacio para el visor y el enlace inferior */
+.portrait,
+.portrait:has(#foto-enlace:not([hidden])) {
+  width: 180px;
+  height: 240px;
+  padding: 0;
+  border: 6px solid white;
+  border-radius: 12px;
+  background: white;
+}
+
+.portrait iframe {
+  display: block;
+  width: 100%;
+  height: calc(100% - 36px);
+  border: 0;
+}
+
+.portrait #foto-enlace {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  padding: 0 4px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: white;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+/* Centrar la fotografía en teléfonos */
+@media (max-width: 650px) {
+  .identity .portrait {
+    align-self: center;
+    width: 160px;
+    height: 215px;
+  }
+}
+
