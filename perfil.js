@@ -1,6 +1,6 @@
 'use strict';
 
-const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzbdS13cYPzm1rJ0vLFeY9jkKedAimW3Oq7dHJXW4lGwyLnzYC2Xts1SEFVKJvF7caH1A/exec';
+const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyWfcOoVGnwGg9NY1zkAt-DBAxrBqQHnicSmfanUV0HUb5Sl1r5wm94RBAKtUsV19myTQ/exec';
 
 const etiquetas = {
   senderismo: 'Senderismo',
@@ -59,6 +59,7 @@ function elemento(tag, clase, texto) {
 }
 
 function estado(titulo, mensaje, reintentar = false) {
+  mostrarFoto('');
   porId('perfil-identidad').hidden = true;
   porId('perfil-formacion').hidden = true;
 
@@ -93,7 +94,59 @@ function validarPerfil(perfil) {
   return perfil;
 }
 
+function mostrarFoto(urlFoto) {
+  const visor = porId('foto-asociado');
+  const placeholder = porId('foto-placeholder');
+  const enlace = porId('foto-enlace');
+
+  // Limpiar la fotografía anterior.
+  visor.hidden = true;
+  visor.removeAttribute('src');
+
+  enlace.hidden = true;
+  enlace.removeAttribute('href');
+
+  placeholder.hidden = false;
+
+  if (typeof urlFoto !== 'string' || !urlFoto.trim()) {
+    return;
+  }
+
+  try {
+    const url = new URL(urlFoto.trim());
+
+    if (url.protocol !== 'https:' || url.hostname !== 'drive.google.com') {
+      return;
+    }
+
+    const coincidencia = url.pathname.match(/^\/file\/d\/([a-zA-Z0-9_-]+)(?:\/|$)/);
+
+    if (!coincidencia) return;
+
+    const idArchivo = coincidencia[1];
+
+    const vista = new URL(`https://drive.google.com/file/d/${idArchivo}/preview`);
+
+    // Conservar la clave de recurso cuando venga en el enlace.
+    const resourceKey = url.searchParams.get('resourcekey');
+
+    if (resourceKey) {
+      vista.searchParams.set('resourcekey', resourceKey);
+    }
+
+    visor.src = vista.href;
+    visor.hidden = false;
+    placeholder.hidden = true;
+
+    enlace.href = url.href;
+    enlace.hidden = false;
+  } catch (error) {
+    console.warn('La URL de la fotografía no es válida.');
+  }
+}
+
 function mostrarPerfil(perfil) {
+  mostrarFoto(perfil.foto);
   porId('nombre').textContent = perfil.nombre || 'Perfil del asociado';
 
   porId('identificador').textContent = perfil.id;
