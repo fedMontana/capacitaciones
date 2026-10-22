@@ -662,3 +662,44 @@ footer a {
   overflow-wrap: anywhere;
   min-width: 0;
 }
+
+/* Fotografía mediante el visor de Drive */
+.portrait iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: white;
+}
+
+.portrait #foto-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+  background: #e6f0ee;
+}
+
+.portrait #foto-enlace {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5px 3px;
+  background: white;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* Espacio inferior para el enlace */
+.portrait:has(#foto-enlace:not([hidden])) {
+  padding-bottom: 28px;
+}
